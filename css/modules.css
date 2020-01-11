@@ -1,0 +1,14 @@
+h2 {
+    font-family: 'Muli', sans-serif;
+  };
+  
+  p {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  
+  footer {
+    background-color: gray;
+    padding: 16px;
+    color: #0006FF;
+    text-align: center;
+  }
