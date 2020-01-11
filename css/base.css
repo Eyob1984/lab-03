@@ -3,15 +3,21 @@ main {
     display: flex;
     flex-flow: wrap;
     justify-content: space-around;
+    border: 2px solid black;
+    
+    
   }
   section {
     width: 290px;
     margin: 36px;
+    border: 2px solid black;
+    border-radius: 5%;
   }
   
   img {
     height: 200px;
     width: 100%;
+  
   }
   
   h1 {
