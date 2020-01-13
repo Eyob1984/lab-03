@@ -1,8 +1,8 @@
 'use strict';
 
 // I got a suggestion from one of the TA to make these JSON data as global not to write down get function twice.
-let page1 = './data/page-1.json';
-let page2 = './data/page-2.json';
+let pageI = './data/page-1.json';
+let pageII = './data/page-2.json';
 let AllImages = [];
 
 function Image(Img) {
@@ -11,7 +11,7 @@ function Image(Img) {
   }
 }
 Image.prototype.toHtml = function() {
-  let source = $('#photo-template').html();
+  let source = $('#image-template').html();
   let template = Handlebars.compile(source);
   return template(this);
 };
@@ -20,10 +20,11 @@ Image.prototype.toDropdown = function() {
   let template = Handlebars.compile(source);
   return template(this);
 };
-let readJson = (pageNumber) => {
+// pages referces to page I and II
+let readJson = (pages) => {
 
   AllImages = [];
-  $.get(pageNumber)
+  $.get(pages)
     .then(imageData => {
       imageData.forEach(image => {
         AllImages.push(new Image(image));
@@ -40,37 +41,30 @@ let loadImages = () => {
 };
 let dropDrown = () => {
   AllImages.forEach(image => {
-    let exists = false;
+    let finds = false;
     $('#selectBox option').each(function(){
       if(this.value === image.keyword){
-        exists = true;
+        finds = true;
       }
     });
-    if(exists === false){
-      //add element to parent
+    if(finds === false){
       $('select').append(image.toDropdown());
     }
   });
 };
-//Event handler function
 let imageSelector = (event) => {
   $('section').hide();
   let img = $(`img[value="${event.target.value}"]`).parent();
   $(img).show();
 };
-//Drop-down list event handler
 $('#selectBox').on('change', imageSelector);
-
-// Json page selector functions
-let pageOneSelector = () => {
-  // Images .holdingArray for the first data = [];
+let pageISelector = () => {
   $('section').remove();
-  readJson(page1);
+  readJson(pageI);
 };
-let pageTwoSelector = () => {
-  // Images.holdingArray for the second data= [];
+let pageIISelector = () => {
   $('section').remove();
-  readJson(page2);
+  readJson(pageII);
 };
 
 //Sort functions
@@ -91,7 +85,7 @@ let titleSort = () => {
   $('section').remove();
   loadImages();
 };
-//  these codes are also from code challenge
+//  these codes are also from code challenge-03
 let hornSort = () => {
   AllImages.forEach( () => {
     AllImages.sort( (a,b) => {
@@ -102,12 +96,12 @@ let hornSort = () => {
   $('section').remove();
   loadImages();
 };
-$('#page1').on('click', pageOneSelector);
-$('#page2').on('click', pageTwoSelector);
+$('#pageI').on('click', pageISelector);
+$('#pageII').on('click', pageIISelector);
 
 $('#title').on('click', titleSort);
 $('#horns').on('click', hornSort);
 
 
-$(() => readJson(page1));
+$(() => readJson(pageI));
 
